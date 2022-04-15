@@ -1,4 +1,6 @@
+import requests
 import os
+import json
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -11,7 +13,10 @@ def get_real_time():
     query = "91754"
     aqi = "no"
     real_time_path = f"{api_base_url}current.json?key={api_key}&q={query}&aqi={aqi}"
-    get_real_time = "http://api.weatherapi.com/v1/current.json?key={api_key}&q={query}&aqi={aqi}"
+
+    r = requests.get(real_time_path)
+    print(r.status_code)
+    print(r.text)
 
 
 def get_forecast():
@@ -25,3 +30,6 @@ def get_forecast():
 
 def get_astronomy():
     """GET Astronomical Data for requested location"""
+
+
+get_real_time()
