@@ -7,20 +7,28 @@ with open('conf.json','r') as f:
     config = json.load(f)
 
 api_key = config['api_key']
+home = config['home']
+aqi = config['include_aqi']
 api_base_url = "http://api.weatherapi.com/v1/"
+real_time_path = ""
+forecast_path = ""
 
-def get_real_time(query: str):
+print(f"Home is {home}")
+def get_real_time(query = home):
     """GET Real Time for requested location w/ air quality"""
-    aqi = "no"
-    real_time_path = f"{api_base_url}current.json?key={api_key}&q={query}&aqi={aqi}"
+    # Check if query/location is blank
+    if query == "":
+        print("No location given or found in conf.json")
+        exit()
+    elif query != "":
+        real_time_path = f"{api_base_url}current.json?key={api_key}&q={query}&aqi={aqi}"
 
     r = requests.get(real_time_path).json()
     location_name = r['location']['name']
     temp = r['current']['temp_f']
 
-    "The current temperature in"
     print(f"The current temperature in {location_name} is {temp}")
-    #print(r.text)
+
 
 
 def get_forecast():

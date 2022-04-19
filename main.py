@@ -10,7 +10,7 @@ app.add_typer(astronomy, name="astronomy")
 
 # Get real-time weather
 @app.command()
-def today(location: str):
+def today(location = connect.home):
     # Make API call
     connect.get_real_time(location)
     # Parse data from API
