@@ -1,6 +1,6 @@
 {
     "api_key" : "c16db791ee7144b7b62190215221304",
-    "degree_pref" : "f",
+    "use_celsius" : "no",
     "include_aqi" : "no",
     "home" : "91754"
 }
