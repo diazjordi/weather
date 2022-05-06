@@ -1,0 +1,8 @@
+{
+    "api_key" : "c16db791ee7144b7b62190215221304",
+    "use_metric" : true,
+    "include_aqi" : "no",
+    "include_alerts" : "no",
+    "home" : "Los Angeles",
+    "sentence_format" : false
+}
