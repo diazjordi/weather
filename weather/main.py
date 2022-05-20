@@ -18,7 +18,6 @@ def today(location: str = typer.Argument(None)):
 # Get weather forecast for user requested length
 @app.command()
 def forecast(location: str = typer.Argument(None), num_days: str = typer.Argument(None)):
-    print("forecast requested")
     # Call API
     connect.get_forecast(location, num_days)
 

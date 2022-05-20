@@ -8,4 +8,4 @@ Packages Used:
 External Sources:
 - weatherapi
 
-Set custom settings in conf.json
+- User customization settings can be accessed in the "conf.json" file
