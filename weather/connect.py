@@ -123,27 +123,27 @@ def get_forecast(query: str = typer.Argument(None), num_days: int = 3):
     # Call necessary API function
     r = call_forecast(query, num_days)
 
-    print(type(num_days))
-    # iterate days
+    # grab entire forecast
+    entire_forecast = r["forecast"]['forecastday']
+
     location_name = r['location']['name']
-    for day in range(1,int(num_days)):
-        forecast = r["forecast"]['forecastday']
-        print(forecast[day])      
-        """ condition = r['current']['condition']['text']
-        humidity = str(f"{forecast[day]['day']['avghumidity']}%")
+    # iterate days
+    for day in range(0,int(num_days)):
+        condition = r['current']['condition']['text']
+        humidity = str(f"{entire_forecast[day]['day']['avghumidity']}%")
         uv = r['current']['uv']
         if use_metric:
             curr_temp = str(f"{r['current']['temp_c']}°C")
-            max_temp = str(f"{forecast[day]['day']['maxtemp_c']}°C")
-            min_temp = str(f"{forecast[day]['day']['mintemp_c']}°C") 
-            avg_temp =  str(f"{forecast[day]['day']['avgtemp_c']}°C")
-            total_precip = str(f"{forecast[day]['day']['totalprecip_mm']} mm")
+            max_temp = str(f"{entire_forecast[day]['day']['maxtemp_c']}°C")
+            min_temp = str(f"{entire_forecast[day]['day']['mintemp_c']}°C") 
+            avg_temp =  str(f"{entire_forecast[day]['day']['avgtemp_c']}°C")
+            total_precip = str(f"{entire_forecast[day]['day']['totalprecip_mm']} mm")
         elif not use_metric:
             curr_temp = str(f"{r['current']['temp_f']} °F")
-            max_temp = str(f"{forecast[day]['day']['maxtemp_f']}°F")
-            min_temp = str(f"{forecast[day]['day']['mintemp_f']}°F") 
-            avg_temp =  str(f"{forecast[day]['day']['avgtemp_f']}°F")
-            total_precip = str(f"{forecast[day]['day']['totalprecip_in']} in")
+            max_temp = str(f"{entire_forecast[day]['day']['maxtemp_f']}°F")
+            min_temp = str(f"{entire_forecast[day]['day']['mintemp_f']}°F") 
+            avg_temp =  str(f"{entire_forecast[day]['day']['avgtemp_f']}°F")
+            total_precip = str(f"{entire_forecast[day]['day']['totalprecip_in']} in")
 
         # Format
         print(f"Day {day + 1}")
@@ -152,7 +152,7 @@ def get_forecast(query: str = typer.Argument(None), num_days: int = 3):
         print(f"Humidity will average {humidity}, the UV index is {uv}")
         print(f"You can expect {total_precip} of rain")
         print(f"Current Temp: {curr_temp}, Avg Temp: {avg_temp}")
-        print(f"Max Temp:     {max_temp}, Min Temp: {min_temp}") """
+        print(f"Max Temp:     {max_temp}, Min Temp: {min_temp}")
 
 def get_astronomy():
     """GET Astronomical Data for requested location"""
