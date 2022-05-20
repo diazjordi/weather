@@ -113,23 +113,27 @@ def get_today(query: str = typer.Argument(None)):
         total_precip = str(f"{forecast[0]['day']['totalprecip_in']} in")
 
     # Format
-    print(f"It will be {condition} in {location_name} today")
-    print(f"Humidity will average {humidity}, the UV index is {uv}")
-    print(f"You can expect {total_precip} of rain")
-    print(f"Current Temp: {curr_temp}, Avg Temp: {avg_temp}")
-    print(f"Max Temp:     {max_temp}, Min Temp: {min_temp}")
+    print(f"{location_name} will be {condition} with {total_precip} of rain")
+    print(f"Humidity: {humidity} UV index: {uv}")
+    print(f"Curr    : {curr_temp},   Avg : {avg_temp}")
+    print(f"High    : {max_temp},   Low : {min_temp}")
   
-def get_forecast(query: str = typer.Argument(None), num_days: int = 3):
+def get_forecast(query: str = typer.Argument(None), num_days = None):
+    num_days = int(num_days)
+    if num_days is None:
+        num_days = 3
+    elif num_days > 3:
+        print("Maximum forecast length is 3 days")
+        num_days = 3
     # Call necessary API function
     r = call_forecast(query, num_days)
-
     # grab entire forecast
     entire_forecast = r["forecast"]['forecastday']
 
     location_name = r['location']['name']
     # iterate days
-    for day in range(0,int(num_days)):
-        condition = r['current']['condition']['text']
+    for day in range(0,num_days):
+        condition = entire_forecast[day]['day']['condition']['text']
         humidity = str(f"{entire_forecast[day]['day']['avghumidity']}%")
         uv = r['current']['uv']
         if use_metric:
@@ -147,12 +151,10 @@ def get_forecast(query: str = typer.Argument(None), num_days: int = 3):
 
         # Format
         print(f"Day {day + 1}")
-        print(f"You can expect {total_precip} of rain")
-        print(f"It will be {condition} in {location_name} today")
-        print(f"Humidity will average {humidity}, the UV index is {uv}")
-        print(f"You can expect {total_precip} of rain")
-        print(f"Current Temp: {curr_temp}, Avg Temp: {avg_temp}")
-        print(f"Max Temp:     {max_temp}, Min Temp: {min_temp}")
+        print(f"{location_name} will be {condition} with {total_precip} of rain")
+        print(f"Humidity: {humidity} UV index: {uv}")
+        print(f"Curr    : {curr_temp},   Avg : {avg_temp}")
+        print(f"High    : {max_temp},   Low : {min_temp}")
 
 def get_astronomy():
     """GET Astronomical Data for requested location"""
